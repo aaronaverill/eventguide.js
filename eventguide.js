@@ -131,17 +131,19 @@ class EventGuideData {
 
   processArt(data) {
     if (data.ART) {
-      data.ART = _.sortBy(data.ART, 'name')
+      data.ART = _.sortBy(data.ART, item => {
+        return item.name.replace(/[\(\)]/,'').toLowerCase()
+      })
     }
   }
 
   processCamps(data) {
     if (data.CAMPS) {
-      data.CAMPS.forEach(campRow => {
-        campRow.genreIcons = this.getGenreIcons(campRow.genres)
+      data.CAMPS.forEach(item => {
+        item.genreIcons = this.getGenreIcons(item.genres)
       })
-      data.CAMPS = _.sortBy(data.CAMPS, camp => {
-        return camp.name.replace(/^([Tt]he )/,"")
+      data.CAMPS = _.sortBy(data.CAMPS, item => {
+        return item.name.replace(/^([Tt]he )/,'').toLowerCase()
       })
     }
   }
