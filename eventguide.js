@@ -99,7 +99,6 @@ class EventView {
   }
 }
 
-
 class EventGuideData {
   constructor(sections) {
     this.sections = sections
@@ -157,6 +156,7 @@ class EventGuideData {
   }
 
   processEvents(data) {
+    const tbdDate = new Date(2000,1,1)
     // Process event information by sorting into days and start times
     if (data.EVENTS) {
       var events = []
@@ -164,19 +164,30 @@ class EventGuideData {
         // Events can have multiple days separated by commas, split into individual rows for each day
         var days = eventRow.day.split(',')
         days.forEach(eventDay => {
-          // Turn the day into an actual date
-          var eventDate = this.getEventDate(eventDay)
-          if (eventDate) {
-            // Convert the start time to a consistent and friendly time label
-            eventDate = DateHelper.setEventTime(eventDate, eventRow.start.trim())
-            var event = Object.assign({}, eventRow, {
-              eventDate: eventDate, 
-              day: eventDate.toLocaleDateString(undefined, { weekday: 'long' }), 
-              start: DateHelper.getTimeOfDay(eventDate)
-            })
-            events.push(event)
+          if (eventDay.trim()) {
+            // Turn the day into an actual date
+            var eventDate = this.getEventDate(eventDay)
+            if (eventDate) {
+              // Convert the start time to a consistent and friendly time label
+              eventDate = DateHelper.setEventTime(eventDate, eventRow.start.trim())
+              var event = Object.assign({}, eventRow, {
+                eventDate: eventDate, 
+                day: eventDate.toLocaleDateString(undefined, { weekday: 'long' }), 
+                start: DateHelper.getTimeOfDay(eventDate)
+              })
+              events.push(event)
+            } else {
+              console.log(`Unrecognized day name:${eventDay.trim()}. Event '${eventRow.name}' rejected.`)
+            }
+
+          // If there is no day set, the scheduled is TBD
           } else {
-            console.log(`Unrecognized day name:${eventDay.trim()}. Event '${eventRow.name}' rejected.`)
+            var event = Object.assign({}, eventRow, {
+                eventDate: tbdDate, 
+                day: 'TBD', 
+                start: ''
+              })
+              events.push(event)
           }
         })
       })
@@ -193,7 +204,7 @@ class EventGuideData {
         if (!eventsOnDay) {
           eventsOnDay = {
             day: dayOfEvent,
-            dayName: dayOfEvent.toLocaleDateString(undefined, { weekday: 'long' }),
+            dayName: event.eventDate == tbdDate ? 'Not Scheduled Yet' : dayOfEvent.toLocaleDateString(undefined, { weekday: 'long' }),
             eventsByTime: []
           }
           eventsByDay.push(eventsOnDay)
