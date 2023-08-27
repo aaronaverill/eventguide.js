@@ -1,11 +1,13 @@
 # eventguide.js
 
-
+```
+<!-- Essential libraries we need, including this library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://aaronaverill.github.io/eventguide.js/eventguide.js?v0.0.1"></script>
 
+<!--- Add a listener for window load, and render the guide view -->
 <script>
 var csv = new URL('https://docs.google.com/spreadsheets/d/e/2PACX-1vRRPIZfX5vvPgBpOKg2FhtZLTEy6eP7j3XedCeatinlD40yL9hzRI6wfodubi2O51qvYGxJBELMutOb/pub?output=csv')
 var sections = ['NEIGHBORHOODS','FEATURES','ART','CAMPS','EVENTS']
@@ -13,6 +15,7 @@ var view = new EventView(csv, sections)
 window.addEventListener("load", view.render)
 </script>
 
+<-- Style to your heart's content. Remember to style the print as well. -->
 <style>
 .print-only {
   display: none;
@@ -102,6 +105,7 @@ window.addEventListener("load", view.render)
 }
 </style>
 
+<-- This is the markup and templates that generate the actual guide pages from the guide data CSV file -->
 <div id="event-pocket-guide">
   <h2 class="event-section-header">Art</h2>
   <div class="event-section-ART event-section-two-column" data-template="event-template-ART"></div>
@@ -149,3 +153,4 @@ window.addEventListener("load", view.render)
   {{/each}}
 </script>
 </div>
+```
