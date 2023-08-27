@@ -140,7 +140,9 @@ class EventGuideData {
       data.CAMPS.forEach(campRow => {
         campRow.genreIcons = this.getGenreIcons(campRow.genres)
       })
-      data.CAMPS = _.sortBy(data.CAMPS, 'name')
+      data.CAMPS = _.sortBy(data.CAMPS, camp => {
+        return camp.name.replace(/^([Tt]he )/,"")
+      })
     }
   }
 
