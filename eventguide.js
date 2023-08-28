@@ -115,6 +115,11 @@ class EventGuideData {
       name: 'Booze',
       infoText: 'Booze'
     },
+    'party': {
+      image: '🔥',
+      name: 'Sound/Party',
+      infoText: 'Sound/Party'
+    },
     'sound/party': {
       image: '🔥',
       name: 'Sound/Party',
@@ -197,6 +202,11 @@ class EventGuideData {
       image: '🍸',
       name: 'Booze',
       infoText: 'Booze'
+    },
+    'party': {
+      image: '🔥',
+      name: 'Sound/Party',
+      infoText: 'Sound/Party'
     },
     'sound/party': {
       image: '🔥',
