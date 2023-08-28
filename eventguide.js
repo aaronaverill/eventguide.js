@@ -104,21 +104,170 @@ class EventGuideData {
     this.sections = sections
   }
 
-  static iconMap = {
-    'food': '🍔',
-    'booze': '🍸',
-    'sound/party': '🔥',
-    'chill': '😎',
-    'wellness/spiritual': '🧘',
-    'arts/crafts': '🎨',
-    'kids': '🎒',
-    'feels': '💖',
-    'games': '🎲',
-    'music': '🎧',
-    'stage': '🎸',
-    'performances': '🎭',
-    'workshops': '🎓',
-    'adult': '🍆',
+  static campIconNames = {
+    'food': {
+      image: '🍔',
+      name: 'Food',
+      infoText: 'Food'
+    },
+    'booze': {
+      image: '🍸',
+      name: 'Booze',
+      infoText: 'Booze'
+    },
+    'sound/party': {
+      image: '🔥',
+      name: 'Sound/Party',
+      infoText: 'Sound/Party'
+    },
+    'chill': {
+      image: '😎',
+      name: 'Chill',
+      infoText: 'Chill'
+    },
+    'wellness/spiritual': {
+      image: '🧘',
+      name: 'Wellness/Spiritual',
+      infoText: 'Wellness/Spiritual'
+    },
+    'art': {
+      image: '🎨',
+      name: 'Arts & Crafts',
+      infoText: 'Arts & Crafts'
+    },
+    'arts & crafts': {
+      image: '🎨',
+      name: 'Arts & Crafts',
+      infoText: 'Arts & Crafts'
+    },
+    'kids': {
+      image: '👶',
+      name: 'kids',
+      infoText: 'kids'
+    },
+    'feels': {
+      image: '💖',
+      name: 'feels',
+      infoText: 'feels'
+    },
+    'games': {
+      image: '🎲',
+      name: 'games',
+      infoText: 'games'
+    },
+    'music': {
+      image: '🎧',
+      name: 'music',
+      infoText: 'music'
+    },
+    'stage': {
+      image: '🎸',
+      name: 'Stage',
+      infoText: 'Stage'
+    },
+    'performances': {
+      image: '🎭',
+      name: 'Performances',
+      infoText: 'Performances'
+    },
+    'workshops': {
+      image: '🎓',
+      name: 'Workshops & Educational Classes',
+      infoText: 'Workshops & Educational Classes'
+    },
+    'adult': {
+      image: '🔞',
+      name: 'Adult Activities',
+      infoText: 'Adult Activities'
+    },
+    'sex': {
+      image: '🍆',
+      name: 'Sexual Activities',
+      infoText: 'Sexual Activities'
+    },
+  }
+
+  static eventIconNames = {
+    'food': {
+      image: '🍔',
+      name: 'Food',
+      infoText: 'Food'
+    },
+    'booze': {
+      image: '🍸',
+      name: 'Booze',
+      infoText: 'Booze'
+    },
+    'sound/party': {
+      image: '🔥',
+      name: 'Sound/Party',
+      infoText: 'Sound/Party'
+    },
+    'chill': {
+      image: '😎',
+      name: 'Chill',
+      infoText: 'Chill'
+    },
+    'wellness/spiritual': {
+      image: '🧘',
+      name: 'Wellness/Spiritual',
+      infoText: 'Wellness/Spiritual'
+    },
+    'art': {
+      image: '🎨',
+      name: 'Arts & Crafts',
+      infoText: 'Arts & Crafts'
+    },
+    'arts & crafts': {
+      image: '🎨',
+      name: 'Arts & Crafts',
+      infoText: 'Arts & Crafts'
+    },
+    'kids': {
+      image: '👶',
+      name: 'kids',
+      infoText: 'kids'
+    },
+    'feels': {
+      image: '💖',
+      name: 'feels',
+      infoText: 'feels'
+    },
+    'games': {
+      image: '🎲',
+      name: 'games',
+      infoText: 'games'
+    },
+    'music': {
+      image: '🎧',
+      name: 'music',
+      infoText: 'music'
+    },
+    'stage': {
+      image: '🎸',
+      name: 'Stage',
+      infoText: 'Stage'
+    },
+    'performances': {
+      image: '🎭',
+      name: 'Performances',
+      infoText: 'Performances'
+    },
+    'workshops': {
+      image: '🎓',
+      name: 'Workshops & Educational Classes',
+      infoText: 'Workshops & Educational Classes'
+    },
+    'adult': {
+      image: '🔞',
+      name: 'Adult Activities',
+      infoText: 'Adult Activities'
+    },
+    'sex': {
+      image: '🍆',
+      name: 'Sexual Activities',
+      infoText: 'Sexual Activities'
+    },
   }
 
   parseData(results) {
@@ -140,7 +289,7 @@ class EventGuideData {
   processCamps(data) {
     if (data.CAMPS) {
       data.CAMPS.forEach(item => {
-        item.genreIcons = this.getGenreIcons(item.genres)
+        item.icons = this.getIcons(EventGuideData.campIconNames, item.iconNames)
       })
       data.CAMPS = _.sortBy(data.CAMPS, item => {
         return item.name.replace(/^([Tt]he )/,'').toLowerCase()
@@ -148,45 +297,35 @@ class EventGuideData {
     }
   }
 
-  getGenreIcons(genres) {
-    var icons = []
-    genres = _.map(genres.split(','), genre => genre.trim().toLowerCase())
-    Object.keys(EventGuideData.iconMap).forEach(genre => {
-      if (genres.includes(genre)) {
-        icons.push(EventGuideData.iconMap[genre])
-      }
-    })
-    return icons
-  }
-
   processEvents(data) {
     const tbdDate = new Date(2000,1,1)
     // Process event information by sorting into days and start times
     if (data.EVENTS) {
       var events = []
-      data.EVENTS.forEach(eventRow => {
+      data.EVENTS.forEach(item => {
+        item.icons = this.getIcons(EventGuideData.eventIconNames, item.iconNames)
         // Events can have multiple days separated by commas, split into individual rows for each day
-        var days = eventRow.day.split(',')
+        var days = item.day.split(',')
         days.forEach(eventDay => {
           if (eventDay.trim()) {
             // Turn the day into an actual date
             var eventDate = this.getEventDate(eventDay)
             if (eventDate) {
               // Convert the start time to a consistent and friendly time label
-              eventDate = DateHelper.setEventTime(eventDate, eventRow.start.trim())
-              var event = Object.assign({}, eventRow, {
+              eventDate = DateHelper.setEventTime(eventDate, item.start.trim())
+              var event = Object.assign({}, item, {
                 eventDate: eventDate, 
                 day: eventDate.toLocaleDateString(undefined, { weekday: 'long' }), 
                 start: DateHelper.getTimeOfDay(eventDate)
               })
               events.push(event)
             } else {
-              console.log(`Unrecognized day name:${eventDay.trim()}. Event '${eventRow.name}' rejected.`)
+              console.log(`Unrecognized day name:${eventDay.trim()}. Event '${item.name}' rejected.`)
             }
 
           // If there is no day set, the scheduled is TBD
           } else {
-            var event = Object.assign({}, eventRow, {
+            var event = Object.assign({}, item, {
                 eventDate: tbdDate, 
                 day: 'TBD', 
                 start: ''
@@ -228,6 +367,20 @@ class EventGuideData {
       })
       data.eventsByDay = eventsByDay
     }
+  }
+
+  getIcons(iconNameMap, iconNames) {
+    var icons = []
+    if (!iconNames) {
+      return icons
+    }
+    iconNames = _.map(iconNames.split(','), iconName => iconName.trim().toLowerCase())
+    Object.keys(iconNameMap).forEach(iconName => {
+      if (iconNames.includes(iconName.toLowerCase())) {
+        icons.push(iconNameMap[iconName.toLowerCase()])
+      }
+    })
+    return icons
   }
 
   getEventDate(eventDay) {
