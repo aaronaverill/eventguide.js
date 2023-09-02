@@ -86,13 +86,27 @@ h3.event-time-header {
   margin-bottom: 0;
   text-align: center;
 }
+.mobile-next-line {
+  display: inline;
+}
 /* Some mobile styles */
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 680px) {
   .guidefilter-buttons a {
     max-width: 200px;
     display: block !important;
     margin-left: auto;
     margin-right: auto;
+  }
+  .mobile-next-line {
+    display: block;
+  }
+  .mobile-next-line .separator {
+    display: none;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .event-section-two-column .event-item-list {
+    column-count: 1;
   }
 }
 
