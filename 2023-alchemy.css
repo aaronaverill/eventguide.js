@@ -1,0 +1,103 @@
+
+.print-only {
+  display: none;
+}
+.event-item-block {
+  break-inside: avoid;
+  padding-bottom: 1rem;
+}
+#content h2 {
+  background-color: #e0eaf0;
+  font-size: 1.7rem;
+  padding-top: .7rem;
+  padding-bottom: .8rem;
+  text-align: center;
+}
+#content h3.event-time-header {
+  font-size: 1.4rem;
+  margin-top: .2rem;
+  margin-bottom: 0;
+  text-align: center;
+}
+.event-item-title h3 {
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  letter-spacing: -.8px;
+  line-height: 1.8rem;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.event-item-title h4 {
+  display: inline;
+  font-size: 1.2rem;
+}
+.event-item-subtitle {
+  font-size: 1.1rem;
+}
+.event-item-description {
+  color: black;
+  line-height: 1.4rem;
+  padding-top: .5rem;
+}
+.event-item-description p {
+  margin-top: 0;
+  margin-bottom: .8rem;
+}
+.event-section-EVENTS .event-item-description {
+  padding-top: 0;
+}
+.event-section-two-column .event-item-list {
+  column-count: 2;
+  column-gap: 1rem;
+}
+.event-section-two-column .event-item-title,
+.event-section-two-column .event-item-subtitle, 
+.event-section-two-column .event-item-description {
+  text-align: center;
+}
+.event-artist-name {
+  font-weight: bold;
+}
+.event-item-icon {
+  cursor: pointer
+}
+
+@media print {
+  .sqs-block-button,
+  .screen-only {
+    display: none !important;
+  }
+  .print-only {
+    display: initial !important;
+  }
+  body {
+    -webkit-print-color-adjust: exact !important;
+  }
+  header#header,
+  #preFooter,
+  footer#footer {
+    display:none;
+  }
+  main#page {
+    padding: 0;
+  }
+  @page {
+    margin: 0.6in;
+  }
+  #content h2 {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #333;
+  }
+  .event-item-title h3 {
+    font-size: 18pt;
+  }
+  .event-item-description {
+    font-size: 11pt;
+    line-height: 14pt;
+  }
+  .event-item-description p {
+    margin-top: 0;
+    margin-bottom: 6pt;
+  }
+}

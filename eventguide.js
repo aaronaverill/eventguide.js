@@ -282,6 +282,11 @@ class EventGuideData {
 
   parseData(results) {
     var data = this.parseCsvData(results)
+    this.processData(data)
+    return data
+  }
+
+  processData(data) {
     this.processArt(data)
     this.processCamps(data)
     this.processEvents(data)
@@ -471,5 +476,23 @@ class EventGuide {
       var template = document.getElementById(element.getAttribute(this.templateDataAttribute)).innerText
       element.innerHTML = Handlebars.compile(template)(this.data)
     })  
+  }
+
+  static setSectionVisible(h2Text, visible) {
+    var h2 = document.querySelectorAll('#content h2')
+    var sectionH2 = _.find(h2, element => element.innerText.toUpperCase() == h2Text.toUpperCase())
+    if (!sectionH2) return
+    
+    var block = sectionH2.closest('.sqs-block')
+    while (block) {
+      block.style.display = visible ? '' : 'none'
+      block = block.nextElementSibling 
+      if (block) {
+        var h2 = block.getElementsByTagName('h2')
+        if (h2.length) {
+          block = null
+        }
+      }
+    }
   }
 }
