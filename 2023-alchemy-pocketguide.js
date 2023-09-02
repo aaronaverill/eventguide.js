@@ -27,6 +27,9 @@ class AlchemyPocketGuide {
   
   filter(filter) {
     var model = this.model
+    if (!model) {
+      return
+    }
     if (filter == 'all') {
       this.setAllCommonSectionsVisible(true)
     } else {
