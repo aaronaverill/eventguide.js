@@ -97,16 +97,14 @@ h3.event-time-header {
     margin-left: auto;
     margin-right: auto;
   }
+  .event-section-two-column .event-item-list {
+    column-count: 1;
+  }
   .mobile-next-line {
     display: block;
   }
   .mobile-next-line .separator {
     display: none;
-  }
-}
-@media only screen and (max-width: 520px) {
-  .event-section-two-column .event-item-list {
-    column-count: 1;
   }
 }
 
