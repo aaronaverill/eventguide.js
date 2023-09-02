@@ -309,6 +309,21 @@ class EventGuideData {
       data.CAMPS = _.sortBy(data.CAMPS, item => {
         return item.name.replace(/^([Tt]he )/,'').toLowerCase()
       })
+
+      data.stages = []
+      data.CAMPS.forEach(item => {
+        if (item.stage) {
+          data.stages.push({
+            name: item.stage,
+            mapid: item.mapid,
+            location: item.stage != item.name ? item.name : '',
+            description: item.stageDesc
+          })
+        }
+      })
+      data.stages = _.sortBy(data.stages, item => {
+        return item.name.replace(/^([Tt]he )/,'').toLowerCase()
+      })
     }
   }
 

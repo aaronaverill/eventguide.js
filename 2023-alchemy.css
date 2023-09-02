@@ -86,6 +86,11 @@ h3.event-time-header {
   margin-bottom: 0;
   text-align: center;
 }
+.event-section-STAGES .event-item-title,
+.event-section-STAGES .event-item-subtitle,
+.event-section-STAGES .event-item-description {
+  text-align: center;
+}
 .mobile-next-line {
   display: inline;
 }
