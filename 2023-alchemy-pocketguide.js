@@ -25,54 +25,50 @@ class AlchemyPocketGuide {
     alert('The Very Useful Pocket Guide is still in DRAFT mode. We will let you know when the print version is ready for publication.')
   }
   
-  entireGuide() {
-    this.setAllCommonSectionsVisible(true)
-    this.renderView(this.model)
+  filter(filter) {
+    var model = this.model
+    if (filter == 'all') {
+      this.setAllCommonSectionsVisible(true)
+    } else {
+      this.setAllCommonSectionsVisible(false)
+      model = JSON.parse(JSON.stringify(this.model))
+      switch(filter) {
+        case 'art':
+          model.EVENTS = model.CAMPS = []
+          break
+        case 'events':
+          model.ART = model.CAMPS = []
+          break
+        case 'camps':
+          model.ART = model.EVENTS = []
+          break
+        case 'center-camp':
+          model.ART = model.CAMPS = []
+          model.EVENTS = _.filter(model.EVENTS, event => event.location.toLowerCase() == 'center camp')      
+          break
+        case 'sound':
+          model.ART = model.CAMPS = []
+          model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('sound'))
+          break
+        case 'food':
+          model.ART = model.CAMPS = []
+          model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('food'))
+          break
+      }
+    }
+    this.renderView(model)
+    this.setActiveButton(filter)
   }
 
-  artOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.EVENTS = model.CAMPS = []
-    this.renderView(model)
-  }
-
-  eventsOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.ART = model.CAMPS = []
-    this.renderView(model)
-  }
-  
-  campsOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.ART = model.EVENTS = []
-    this.renderView(model)
-  }
-
-  centerCampOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.ART = model.CAMPS = []
-    model.EVENTS = _.filter(model.EVENTS, event => event.location.toLowerCase() == 'center camp')
-    this.renderView(model)
-  }
-  
-  soundOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.ART = model.CAMPS = []
-    model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('sound'))
-    this.renderView(model)
-  }
-  
-  foodOnly() {
-    this.setAllCommonSectionsVisible(false)
-    var model = JSON.parse(JSON.stringify(this.model))
-    model.ART = model.CAMPS = []
-    model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('food'))
-    this.renderView(model)
+  setActiveButton(filter) {
+    const buttonBlock = document.querySelectorAll('.guidefilter-buttons a')
+    buttonBlock.forEach(element => {
+      const classes = _.reject(element.className.split(' '), className => className == 'filter-active')
+      if (element.dataset.filter == filter) {
+        classes.push('filter-active')
+      }
+      element.className = classes.join(' ')
+    })
   }
 
   setAllCommonSectionsVisible(visible) {
