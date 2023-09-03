@@ -8,10 +8,26 @@
     text-align: center;
 }
 #content h2 {
-  background-color: #e0eaf0;
-  font-size: 1.7rem;
-  padding-top: .7rem;
-  padding-bottom: .8rem;
+  background: linear-gradient(
+    70deg,
+    hsl(0, 80%, 60%),
+    hsl(30, 100%, 70%),
+    hsl(60, 100%, 80%),
+    hsl(90, 100%, 80%),
+    hsl(120, 100%, 80%),
+    hsl(150, 100%, 80%),
+    hsl(180, 100%, 80%),
+    hsl(210, 100%, 80%),
+    hsl(240, 100%, 85%),
+    hsl(270, 100%, 80%),
+    hsl(300, 95%, 75%),
+    hsl(334, 100%, 70%),
+    hsl(360, 90%, 65%));
+  color: black;
+  font-size: 2.5rem;
+  font-weight: bold;
+  padding-top: .3rem;
+  padding-bottom: .3rem;
 }
 /* Filter button section */
 .guidefilter-buttons {
