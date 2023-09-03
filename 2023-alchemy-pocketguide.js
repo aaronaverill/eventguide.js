@@ -14,9 +14,8 @@ class AlchemyPocketGuide {
     })
   }
   
-  renderView(data = null) {
-    const viewData = new EventGuideData(this.sections).processData(data || this.model)
-    this.view.data = viewData
+  renderView(viewData = null) {
+    this.view.data = viewData || new EventGuideData(this.sections).processData(this.model)
     this.view.render()
   }
   
@@ -26,54 +25,56 @@ class AlchemyPocketGuide {
   }
   
   filter(filter) {
-    var model = this.model
-    if (!model) {
+    if (!this.model) {
       return
     }
-    if (filter == 'all') {
-      this.setAllCommonSectionsVisible(true)
-    } else {
-      this.setAllCommonSectionsVisible(false)
-      model = JSON.parse(JSON.stringify(this.model))
-      switch(filter) {
-        case 'art':
-          model.EVENTS = model.CAMPS = []
-          break
-        case 'events':
-          model.ART = model.CAMPS = []
-          break
-        case 'stages': {
-          model.ART = model.EVENTS = []
-          const viewData = new EventGuideData(this.sections).processData(model)
-          viewData.CAMPS = []
-          this.view.data = viewData
-          this.view.render()
-          return
-        }
-        case 'camps': {
-          model.ART = model.EVENTS = []
-          const viewData = new EventGuideData(this.sections).processData(model)
-          viewData.stages = []
-          this.view.data = viewData
-          this.view.render()
-          return
-        }
-        case 'center-camp':
-          model.ART = model.CAMPS = []
-          model.EVENTS = _.filter(model.EVENTS, event => event.location.toLowerCase() == 'center camp')      
-          break
-        case 'sound':
-          model.ART = model.CAMPS = []
-          model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('sound'))
-          break
-        case 'food':
-          model.ART = model.CAMPS = []
-          model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('food'))
-          break
-      }
+
+    const model = JSON.parse(JSON.stringify(this.model))
+
+    // Adjust the parsed data model to remove some things based on the filter
+    switch(filter) {
+      case 'art':
+        model.EVENTS = model.CAMPS = []
+        break
+      case 'events':
+        model.ART = model.CAMPS = []
+        break
+      case 'stages':
+        model.ART = model.EVENTS = []
+        break
+      case 'camps':
+        model.ART = model.EVENTS = []
+        break
+      case 'center-camp':
+        model.ART = model.CAMPS = []
+        model.EVENTS = _.filter(model.EVENTS, event => event.location.toLowerCase() == 'center camp')      
+        break
+      case 'sound':
+        model.ART = model.CAMPS = []
+        model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('sound'))
+        break
+      case 'food':
+        model.ART = model.CAMPS = []
+        model.EVENTS = _.filter(model.EVENTS, event => event.iconNames.includes('food'))
+        break
     }
-    this.renderView(model)
+
+    // Process the parsed data model to create data that the underscore templates will use
+    const viewData = new EventGuideData(this.sections).processData(model)
+    // Adjust the view data further based on the filter
+    switch(filter) {
+      case 'stages':
+        viewData.CAMPS = []
+        break
+        case 'camps':
+        viewData.stages = []
+        break
+    }
+
+    // Refresh the view
     this.setActiveButton(filter)
+    this.setAllCommonSectionsVisible(filter == 'all')
+    this.renderView(viewData)
   }
 
   setActiveButton(filter) {

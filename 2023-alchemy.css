@@ -37,16 +37,17 @@
   margin-top: 2px;
   margin-bottom: 2px;
 }
-.guidefilter-buttons a.filter-active,
-.guidefilter-buttons.event-filters a.filter-active {
-  background-color: #55F !important;
-}
-.guidefilter-buttons a:hover,
-.guidefilter-buttons.event-filters a:hover {
-  background-color: #77F !important;
+.guidefilter-buttons a {
+  background-color: hsl(240, 50%, 65%) !important;
 }
 .guidefilter-buttons.event-filters a {
-  background-color: #47A!important;
+  background-color: hsl(270, 50%, 65%) !important;
+}
+.guidefilter-buttons a.filter-active {
+  filter: brightness(120%);
+}
+.guidefilter-buttons a:hover {
+  filter: brightness(120%);
 }
 /* Styles for guide specific areas */
 .event-section-two-column .event-item-list {
