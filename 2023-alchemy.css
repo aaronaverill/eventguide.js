@@ -107,6 +107,16 @@ h3.event-time-header {
 .event-section-STAGES .event-item-description {
   text-align: center;
 }
+.event-item-age {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.event-item-age.event-age-red .event-age-description {
+  color: hsl(0, 80%, 60%);
+}
+.event-item-age.event-age-purple .event-age-description {
+  color: hsl(270, 100%, 70%);
+}
 .mobile-next-line {
   display: inline;
 }

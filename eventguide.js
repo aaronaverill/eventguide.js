@@ -305,6 +305,10 @@ class EventGuideData {
     if (data.CAMPS) {
       data.CAMPS.forEach(item => {
         item.icons = this.getIcons(EventGuideData.campIconNames, item.iconNames)
+        if (item.agecolor) {
+          item.ages = {}
+          item.ages[item.agecolor] = true
+        }
       })
       data.CAMPS = _.sortBy(data.CAMPS, item => {
         return item.name.replace(/^([Tt]he )/,'').toLowerCase()
@@ -334,6 +338,10 @@ class EventGuideData {
       var events = []
       data.EVENTS.forEach(item => {
         item.icons = this.getIcons(EventGuideData.eventIconNames, item.iconNames)
+        if (item.agecolor) {
+          item.ages = {}
+          item.ages[item.agecolor] = true
+        }
         // Events can have multiple days separated by commas, split into individual rows for each day
         var days = item.day.split(',')
         days.forEach(eventDay => {
