@@ -15,7 +15,7 @@ class AlchemyPocketGuide {
   }
   
   renderView(data = null) {
-    var viewData = new EventGuideData(this.sections).processData(data || this.model)
+    const viewData = new EventGuideData(this.sections).processData(data || this.model)
     this.view.data = viewData
     this.view.render()
   }
@@ -42,9 +42,22 @@ class AlchemyPocketGuide {
         case 'events':
           model.ART = model.CAMPS = []
           break
-        case 'camps':
+        case 'stages': {
           model.ART = model.EVENTS = []
-          break
+          const viewData = new EventGuideData(this.sections).processData(model)
+          viewData.CAMPS = []
+          this.view.data = viewData
+          this.view.render()
+          return
+        }
+        case 'camps': {
+          model.ART = model.EVENTS = []
+          const viewData = new EventGuideData(this.sections).processData(model)
+          viewData.stages = []
+          this.view.data = viewData
+          this.view.render()
+          return
+        }
         case 'center-camp':
           model.ART = model.CAMPS = []
           model.EVENTS = _.filter(model.EVENTS, event => event.location.toLowerCase() == 'center camp')      
