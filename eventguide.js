@@ -1,6 +1,14 @@
 class DateHelper {
+  // Days end at 2am (not midnight)
+  static dayEndTime = 2
+
   // A few named times, such as noon, dusk and midnight are translated into their explicit hour of day.
   static getNamedTime(date, time) {
+    if (time.length == 0) {
+      date.setHours(DateHelper.dayEndTime)
+      date.setSeconds(1)
+      return date
+    }
     var namedTimes = {
       noon: 12,
       dusk: 19, // 7pm
@@ -63,7 +71,10 @@ class DateHelper {
   }
 
   // Get the text representation of time of day, using noon and midnight as necessary.
-  static getTimeOfDay(date) {
+  static getTimeOfDay(date, startText) {
+    if (startText.length == 0) {
+      return 'All Day'
+    }
     var hours = date.getHours()
     var minutes = date.getMinutes()
     if ((hours == 0 || hours == 24) && minutes == 0) {
@@ -354,7 +365,7 @@ class EventGuideData {
               var event = Object.assign({}, item, {
                 eventDate: eventDate, 
                 day: eventDate.toLocaleDateString(undefined, { weekday: 'long' }), 
-                start: DateHelper.getTimeOfDay(eventDate)
+                start: DateHelper.getTimeOfDay(eventDate, item.start.trim())
               })
               events.push(event)
             } else {
@@ -379,7 +390,8 @@ class EventGuideData {
       events.forEach(event => {
         var dayOfEvent = new Date(event.eventDate.getTime())
          // Events til 2am appear on prior day
-        dayOfEvent.setHours(dayOfEvent.getHours()-2)
+        dayOfEvent.setHours(dayOfEvent.getHours()-DateHelper.dayEndTime)
+        dayOfEvent.setSeconds(dayOfEvent.getSeconds()-1)
         dayOfEvent.setHours(0,0,0,0)        
         var eventsOnDay = _.find(eventsByDay, date => date.day.getTime() == dayOfEvent.getTime())
         if (!eventsOnDay) {
