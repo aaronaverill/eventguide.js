@@ -49,6 +49,12 @@
 .guidefilter-buttons a:hover {
   filter: brightness(120%);
 }
+/* Maps */
+.event-map {
+  background-color: hsl(120, 40%, 90%);
+  margin-bottom: 2.5rem;
+}
+
 /* Styles for guide specific areas */
 .event-section-two-column .event-item-list {
   column-count: 2;
@@ -150,6 +156,7 @@ h3.event-time-header {
     display: initial !important;
   }
   body {
+    print-color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;
   }
   header#header,
@@ -166,9 +173,19 @@ h3.event-time-header {
   #content h2 {
     background-color: #f0f0f0;
     border-bottom: 1px solid #333;
-  }
-  .event-item-title h3 {
     font-size: 18pt;
+    font-weight: bold;
+    padding-top: 0pt;
+    padding-bottom: 0pt;
+    }
+  .event-item-title h3 {
+    font-size: 16pt;
+  }
+  h3.event-time-header {
+    font-size: 15pt;
+  }
+  .event-item-title h4 {
+    font-size: 13pt;
   }
   .event-item-description {
     font-size: 11pt;
